@@ -79,11 +79,14 @@ public class EmailValidator implements IValidator
 	 */
 	static public boolean isValidEmail(String val)
 	{
-		if ( (val==null) || (val.length()<=1))
+		if ( (val==null) || (val.length()==0))
+		{
+			return true;
+		}
+		if (val.length() == 1 )
 		{
 			return false;
 		}
-		
 		if (val.endsWith("#"))
 		{
 			return true;

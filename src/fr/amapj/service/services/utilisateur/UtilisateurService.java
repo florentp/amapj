@@ -99,6 +99,7 @@ public class UtilisateurService
 		dto.prenom = u.prenom;
 		dto.roles = new AccessManagementService().getRoleAsString(em,u);
 		dto.email = u.email;
+		dto.email2 = u.email2;
 		dto.etatUtilisateur = u.etatUtilisateur;
 		dto.dateCreation = u.dateCreation;
 		dto.dateModification = u.dateModification;
@@ -133,6 +134,7 @@ public class UtilisateurService
 		u.nom = dto.nom;
 		u.prenom = dto.prenom;
 		u.email = dto.email;
+		u.email2 = dto.email2;
 		u.dateModification = DateUtils.getDate();
 		
 		u.numTel1 = dto.numTel1;
@@ -178,11 +180,13 @@ public class UtilisateurService
 		String nom = utilisateurDTO.nom.trim();
 		String prenom = utilisateurDTO.prenom.trim();
 		String email = utilisateurDTO.email.trim().toLowerCase();
+		String email2 = utilisateurDTO.email2.trim().toLowerCase();
 		
 		Utilisateur u = new Utilisateur();
 		u.nom = nom;
 		u.prenom = prenom;
 		u.email = email;
+		u.email2 = email2;
 		u.dateCreation = DateUtils.getDate();
 		u.numTel1 = utilisateurDTO.numTel1;
 		u.numTel2 = utilisateurDTO.numTel2;
@@ -382,7 +386,7 @@ public class UtilisateurService
 		
 		for (Utilisateur u : us)
 		{
-			if (UtilisateurUtil.canSendMailTo(u))
+			if (UtilisateurUtil.canSendMailTo(u.email))
 			{
 				EnvoiMailUtilisateurDTO emu = new EnvoiMailUtilisateurDTO();
 				emu.idUtilisateur = u.getId();

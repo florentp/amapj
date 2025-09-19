@@ -78,21 +78,24 @@ public class PopupUtilisateurVoirPart extends WizardFormPopup
 		addTextField("Prenom", "prenom").setReadOnly(true);
 
 		// Champ 3
-		addTextField("E mail", "email").setReadOnly(true);
-		
+		addTextField("E mail principal", "email").setReadOnly(true);
+
 		// Champ 4
-		addTextField("Téléphone 1", "numTel1").setReadOnly(true);
+		addTextField("E mail secondaire", "email2").setReadOnly(true);
 		
 		// Champ 5
-		addTextField("Téléphone 2", "numTel2").setReadOnly(true);
+		addTextField("Téléphone 1", "numTel1").setReadOnly(true);
 
 		// Champ 6
+		addTextField("Téléphone 2", "numTel2").setReadOnly(true);
+
+		// Champ 7
 		addTextField("Adresse", "libAdr1").setReadOnly(true);
 		
-		// Champ 7
+		// Champ 8
 		addTextField("Code postal", "codePostal").setReadOnly(true);
 		
-		// Champ 8
+		// Champ 9
 		addTextField("Ville", "ville").setReadOnly(true);
 		
 	}

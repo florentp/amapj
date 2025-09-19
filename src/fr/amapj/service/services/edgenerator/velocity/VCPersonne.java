@@ -28,8 +28,10 @@ public class VCPersonne
 	public String nom;
 	
 	public String prenom;
-	
+
 	public String email;
+
+	public String email2;
 	
 	// numéro de  téléphone 1
 	public String numTel1;
@@ -50,6 +52,7 @@ public class VCPersonne
 			nom = s(u.nom);
 			prenom = s(u.prenom);
 			email = s(u.email);
+			email2 = s(u.email2);
 			numTel1 = s(u.numTel1);
 			numTel2 = s(u.numTel2);
 			libAdr1 = s(u.libAdr1);
@@ -61,6 +64,7 @@ public class VCPersonne
 			nom = "";
 			prenom = "";
 			email = "";
+			email2 = "";
 			numTel1 = "";
 			numTel2 = "";
 			libAdr1 = "";
@@ -106,6 +110,16 @@ public class VCPersonne
 	public void setEmail(String email)
 	{
 		this.email = email;
+	}
+
+	public String getEmail2()
+	{
+		return email2;
+	}
+
+	public void setEmail2(String email2)
+	{
+		this.email2 = email2;
 	}
 
 	public String getNumTel1()

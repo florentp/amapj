@@ -33,6 +33,8 @@ import fr.amapj.service.services.utilisateur.UtilisateurDTO;
 import fr.amapj.service.services.utilisateur.UtilisateurService;
 import fr.amapj.view.engine.popup.PopupListener;
 import fr.amapj.view.engine.popup.formpopup.validator.EmailValidator;
+import fr.amapj.view.engine.popup.formpopup.validator.NotEmptyValidator;
+import fr.amapj.view.engine.popup.formpopup.validator.NotNullValidator;
 import fr.amapj.view.engine.template.FrontOfficeView;
 import fr.amapj.view.engine.tools.InLineFormHelper;
 
@@ -62,6 +64,7 @@ public class MonCompteView extends FrontOfficeView implements PopupListener
 	TextField nom;
 	TextField prenom;
 	TextField mail;
+	TextField mail2;
 	TextField pwd;
 	
 	TextField numTel1;
@@ -113,9 +116,10 @@ public class MonCompteView extends FrontOfficeView implements PopupListener
 		
 		
 		// Bloc Adresse mail  
-		InLineFormHelper formHelper = new InLineFormHelper("Votre mail", "Modifier votre adresse mail", this,  e->handleSaveMail());
-	    mail = addTextField("Votre mail",formHelper.getForm());
-	    formHelper.getValidatorManager().add(mail, "Votre mail", "mail", new EmailValidator());
+		InLineFormHelper formHelper = new InLineFormHelper("Votre mail principal (et votre identifiant de connexion)", "Modifier votre adresse mail principale", this,  e->handleSaveMail());
+	    mail = addTextField("Votre mail principal",formHelper.getForm());
+	    formHelper.getValidatorManager().add(mail, "Votre mail principal", "mail", new NotEmptyValidator());
+	    formHelper.getValidatorManager().add(mail, "Votre mail principal", "mail", new EmailValidator());
 		formHelper.addIn(vl1);
 		
 		
@@ -127,14 +131,15 @@ public class MonCompteView extends FrontOfficeView implements PopupListener
 		
 		// les coordonnées
 		formHelper = new InLineFormHelper("Vos coordonnées", "Modifier vos coordonnées", this,  e->handleSaveChangerCoordonnees());
+		mail2 = addTextField("Votre mail secondaire",formHelper.getForm());
+	    formHelper.getValidatorManager().add(mail2, "Votre mail secondaire", "mail2", new EmailValidator(false));
 		numTel1 = addTextField("Numéro de tel 1",formHelper.getForm());
 		numTel2 = addTextField("Numéro de tel 2",formHelper.getForm());
 		adresse = addTextField("Adresse",formHelper.getForm());
 		codePostal = addTextField("Code Postal",formHelper.getForm());
 		ville = addTextField("Ville",formHelper.getForm());
 		formHelper.addIn(vl1);
-	
-		
+
 		refresh();
 		
 	}
@@ -160,6 +165,7 @@ public class MonCompteView extends FrontOfficeView implements PopupListener
 	
 	private void handleSaveChangerCoordonnees()
 	{
+		u.setEmail2(mail2.getValue());
 		u.setNumTel1(numTel1.getValue());
 		u.setNumTel2(numTel2.getValue());
 		u.setLibAdr1(adresse.getValue());

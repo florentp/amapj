@@ -29,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 import fr.amapj.common.DateUtils;
 import fr.amapj.common.StackUtils;
 import fr.amapj.model.engine.rdblink.RdbLink;
+import fr.amapj.model.engine.tools.TestTools;
 import fr.amapj.model.engine.transaction.DbRead;
 import fr.amapj.model.engine.transaction.NewTransaction;
 import fr.amapj.model.models.contrat.modele.EtatModeleContrat;
@@ -46,6 +47,7 @@ import fr.amapj.service.services.gestioncontrat.GestionContratService;
 import fr.amapj.service.services.mailer.MailerAttachement;
 import fr.amapj.service.services.mailer.MailerMessage;
 import fr.amapj.service.services.mailer.MailerService;
+import fr.amapj.service.services.notification.PeriodiqueNotificationService;
 import fr.amapj.service.services.parametres.ParametresDTO;
 import fr.amapj.service.services.parametres.ParametresService;
 import fr.amapj.service.services.producteur.ProducteurService;
@@ -132,18 +134,32 @@ public class DocEngagementNotificationService
 		List<ProducteurUtilisateur> us = new ProducteurService().getProducteurUtilisateur(em, producteur);
 		for (ProducteurUtilisateur u : us) 
 		{
-			if (u.notification==EtatNotification.AVEC_NOTIFICATION_MAIL && UtilisateurUtil.canSendMailTo(u.utilisateur.email))
+			if (u.notification==EtatNotification.AVEC_NOTIFICATION_MAIL)
 			{
-				sb.append(u.utilisateur.email+";");
+				if (UtilisateurUtil.canSendMailTo(u.utilisateur.email))
+				{
+					sb.append(u.utilisateur.email+";");
+				}
+				if (UtilisateurUtil.canSendMailTo(u.utilisateur.email2))
+				{
+					sb.append(u.utilisateur.email2+";");
+				}
 			}
 		}
 		
 		List<ProducteurReferent> rs = new ProducteurService().getProducteurReferent(em, producteur);
 		for (ProducteurReferent r : rs) 
 		{
-			if (r.notification==EtatNotification.AVEC_NOTIFICATION_MAIL && UtilisateurUtil.canSendMailTo(r.referent.email))
+			if (r.notification==EtatNotification.AVEC_NOTIFICATION_MAIL)
 			{
-				sb.append(r.referent.email+";");
+				if (UtilisateurUtil.canSendMailTo(r.referent.email))
+				{
+					sb.append(r.referent.email+";");
+				}
+				if (UtilisateurUtil.canSendMailTo(r.referent.email2))
+				{
+					sb.append(r.referent.email2+";");
+				}
 			}
 		}
 		return sb.toString();

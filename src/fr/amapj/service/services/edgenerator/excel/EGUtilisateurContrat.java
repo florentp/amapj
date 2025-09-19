@@ -55,10 +55,11 @@ public class EGUtilisateurContrat extends AbstractExcelGenerator
 	@Override
 	public void fillExcelFile(RdbLink em,ExcelGeneratorTool et)
 	{
-		et.addSheet("Liste des souscripteurs", 8, 20);
+		et.addSheet("Liste des souscripteurs", 9, 20);
 		et.setColumnWidth(2, 40);
-		et.setColumnWidth(5, 40);
-		et.setColumnWidth(7, 40);
+		et.setColumnWidth(3, 40);
+		et.setColumnWidth(6, 40);
+		et.setColumnWidth(8, 40);
 		
 		
 		ModeleContrat mc = em.find(ModeleContrat.class,idModeleContrat);
@@ -95,12 +96,13 @@ public class EGUtilisateurContrat extends AbstractExcelGenerator
 		et.addRow();
 		et.setCell(0, "Nom", et.grasGaucheNonWrappeBordure);
 		et.setCell(1, "Prénom", et.grasGaucheNonWrappeBordure);
-		et.setCell(2, "E mail", et.grasGaucheNonWrappeBordure);
-		et.setCell(3, "Tel1", et.grasGaucheNonWrappeBordure);
-		et.setCell(4, "Tel2", et.grasGaucheNonWrappeBordure);
-		et.setCell(5, "Adr", et.grasGaucheNonWrappeBordure);
-		et.setCell(6, "Code Postal", et.grasGaucheNonWrappeBordure);
-		et.setCell(7, "Ville", et.grasGaucheNonWrappeBordure);
+		et.setCell(2, "E mail principal", et.grasGaucheNonWrappeBordure);
+		et.setCell(3, "E mail secondaire", et.grasGaucheNonWrappeBordure);
+		et.setCell(4, "Tel1", et.grasGaucheNonWrappeBordure);
+		et.setCell(5, "Tel2", et.grasGaucheNonWrappeBordure);
+		et.setCell(6, "Adr", et.grasGaucheNonWrappeBordure);
+		et.setCell(7, "Code Postal", et.grasGaucheNonWrappeBordure);
+		et.setCell(8, "Ville", et.grasGaucheNonWrappeBordure);
 		
 	}
 
@@ -114,11 +116,12 @@ public class EGUtilisateurContrat extends AbstractExcelGenerator
 		et.setCell(0, u.nom, et.grasGaucheNonWrappeBordure);
 		et.setCell(1, u.prenom, et.nonGrasGaucheBordure);
 		et.setCell(2, u.email, et.nonGrasGaucheBordure);
-		et.setCell(3, u.numTel1, et.nonGrasGaucheBordure);
-		et.setCell(4, u.numTel2, et.nonGrasGaucheBordure);
-		et.setCell(5, u.libAdr1, et.nonGrasGaucheBordure);
-		et.setCell(6, u.codePostal, et.nonGrasGaucheBordure);
-		et.setCell(7, u.ville, et.nonGrasGaucheBordure);
+		et.setCell(3, u.email2, et.nonGrasGaucheBordure);
+		et.setCell(4, u.numTel1, et.nonGrasGaucheBordure);
+		et.setCell(5, u.numTel2, et.nonGrasGaucheBordure);
+		et.setCell(6, u.libAdr1, et.nonGrasGaucheBordure);
+		et.setCell(7, u.codePostal, et.nonGrasGaucheBordure);
+		et.setCell(8, u.ville, et.nonGrasGaucheBordure);
 		
 	}
 	

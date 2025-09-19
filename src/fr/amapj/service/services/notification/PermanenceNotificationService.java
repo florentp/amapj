@@ -130,7 +130,7 @@ public class PermanenceNotificationService
 		
 		message.setTitle(titre);
 		message.setContent(content);
-		message.setEmail(utilisateur.email);
+		message.setEmail(UtilisateurUtil.libMails(utilisateur));
 		sendMessageAndMemorize(message,pc.getId());
 		
 	}

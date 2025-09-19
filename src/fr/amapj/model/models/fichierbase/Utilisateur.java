@@ -60,11 +60,16 @@ public class Utilisateur  implements Identifiable
 	@Size(min = 1, max = 100)
 	@Column(length = 100)
 	public String nom;
-	
+
 	@Size(min = 1, max = 150)
 	@Column(length = 150)
-	// Contient l'adresse e mail
+	// Contient l'adresse e mail principale
 	public String email;
+
+	@Size(min = 0, max = 150)
+	@Column(length = 150)
+	// Contient l'adresse e mail secondaire
+	public String email2;
 	
 	@Size(min = 0, max = 150)
 	@Column(length = 150)

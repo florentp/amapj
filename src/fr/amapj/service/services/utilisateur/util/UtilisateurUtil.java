@@ -21,7 +21,9 @@
  package fr.amapj.service.services.utilisateur.util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Query;
 
@@ -56,7 +58,7 @@ public class UtilisateurUtil
 	 */
 	static public boolean canSendMailTo(Utilisateur u)
 	{
-		return canSendMailTo(u.email);
+		return canSendMailTo(u.email) || canSendMailTo(u.email2);
 	}
 	
 	/**
@@ -79,13 +81,13 @@ public class UtilisateurUtil
 	}
 	
 	/**
-	 * Retourne le mail de l'utilisateur ou  ""  quand il n'a pas d'email 
+	 * Retourne le mail principal de l'utilisateur ou  ""  quand il n'a pas d'email 
 	 * 
 	 * A utiliser dans les fichiers excel par exemple 
 	 */
 	static public String libMail(Utilisateur u)
 	{
-		if (canSendMailTo(u))
+		if (canSendMailTo(u.email))
 		{
 			return u.email;
 		}
@@ -93,6 +95,44 @@ public class UtilisateurUtil
 		{
 			return "";
 		}
+	}
+
+	/**
+	 * Retourne le mail secondaire de l'utilisateur ou  ""  quand il n'a pas d'email 
+	 * 
+	 * A utiliser dans les fichiers excel par exemple 
+	 */
+	static public String libMail2(Utilisateur u)
+	{
+		if (canSendMailTo(u.email2))
+		{
+			return u.email2;
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+	/**
+	 * Retourne le mail primaire et secondaire séparés par une virgule si les deux sont renseignés ou "" quand il n'a pas d'email
+	 * 
+	 * A utiliser dans les envois d'email par exemple
+	 */
+	static public String libMails(Utilisateur u)
+	{
+		String emails="";
+		if (UtilisateurUtil.canSendMailTo(u.email)) {
+			emails = u.email;
+		}
+		if (UtilisateurUtil.canSendMailTo(u.email2)) {
+			if (emails.equals("") == false)
+			{
+				emails += ",";
+			}
+			emails += u.email2;
+		}
+		return emails;
 	}
 	
 	
@@ -154,9 +194,13 @@ public class UtilisateurUtil
 		buf.append("Liste des adresses e-mail :<br/>");
 		for (Utilisateur utilisateur : utilisateurs)
 		{
-			if (UtilisateurUtil.canSendMailTo(utilisateur))
+			if (UtilisateurUtil.canSendMailTo(utilisateur.email))
 			{
 				buf.append(utilisateur.email + ";");
+			}
+			if (UtilisateurUtil.canSendMailTo(utilisateur.email2))
+			{
+				buf.append(utilisateur.email2 + ";");
 			}
 		}
 		return buf.toString();
@@ -185,20 +229,29 @@ public class UtilisateurUtil
 	static public EmailInfo getEmailsInfos(List<Utilisateur> utilisateurs)
 	{
 		EmailInfo res = new EmailInfo();
+		Set<String> emails = new HashSet();
 		
 		for (Utilisateur utilisateur : utilisateurs)
 		{
-			
-			if (UtilisateurUtil.canSendMailTo(utilisateur))
+			if (UtilisateurUtil.canSendMailTo(utilisateur.email) || UtilisateurUtil.canSendMailTo(utilisateur.email2))
 			{
 				res.nbUtilisateurAvecEmail++;
-				res.utilisateurAvecEmail = res.utilisateurAvecEmail + utilisateur.email+";";
+				if (UtilisateurUtil.canSendMailTo(utilisateur.email))
+				{
+					emails.add(utilisateur.email);
+				}
+				if (UtilisateurUtil.canSendMailTo(utilisateur.email2))
+				{
+					emails.add(utilisateur.email2);
+				}
+
 			}
 			else
 			{
 				res.nbUtilisateurSansEmail++;
 				res.utilisateurSansEmail =  res.utilisateurSansEmail + utilisateur.nom + " " + utilisateur.prenom+";";
 			}
+			res.utilisateurAvecEmail = String.join(";", emails);
 		}
 		return res;
 	}

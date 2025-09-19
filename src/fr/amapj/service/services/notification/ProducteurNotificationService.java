@@ -35,6 +35,7 @@ import fr.amapj.common.DateUtils;
 import fr.amapj.common.FormatUtils;
 import fr.amapj.common.StackUtils;
 import fr.amapj.model.engine.rdblink.RdbLink;
+import fr.amapj.model.engine.tools.TestTools;
 import fr.amapj.model.engine.transaction.DbRead;
 import fr.amapj.model.engine.transaction.NewTransaction;
 import fr.amapj.model.models.contrat.modele.EtatModeleContrat;
@@ -142,7 +143,7 @@ public class ProducteurNotificationService
 				dests.addAll(referents);
 				
 				// On supprime les utilisateurs dont l'email se termine par #
-				dests = CollectionUtils.filter(dests, u->UtilisateurUtil.canSendMailTo(u.email)==true);
+				dests = CollectionUtils.filter(dests, u->(UtilisateurUtil.canSendMailTo(u)));
 				
 				// On réalise l'envoi 
 				if (users.size()>0)
@@ -209,16 +210,17 @@ public class ProducteurNotificationService
 
 		for (Utilisateur utilisateur : users)
 		{
+			String emails = UtilisateurUtil.libMails(utilisateur);
 			try
 			{
-				message.setEmail(utilisateur.email);
+				message.setEmail(emails);
 				sendMessageAndMemorize(message,modeleContratDate.getId(),utilisateur.getId());
 			}
 			catch(Exception e)
 			{
 				// En cas d'erreur, on intercepte l'exception pour permettre la notification des autres destinatires
 				deamonsContext.nbError++;
-				logger.error("Erreur pour notifier  "+utilisateur.email+"\n"+StackUtils.asString(e));
+				logger.error("Erreur pour notifier  "+emails+"\n"+StackUtils.asString(e));
 			}
 		}
 	}
@@ -270,6 +272,13 @@ public class ProducteurNotificationService
 		buf.append("<br/>");
 		
 		return buf.toString();
+	}
+
+	public static void main(String[] args)
+	{
+		TestTools.init();
+		ProducteurNotificationService service = new ProducteurNotificationService();
+		service.sendProducteurNotification(new DeamonsContext());
 	}
 
 }

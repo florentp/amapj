@@ -108,7 +108,8 @@ public class EGBilanCompletAmapien extends AbstractExcelGenerator
 		
 		addLine(et,"Nom",u.nom);
 		addLine(et,"Prénom",u.prenom);
-		addLine(et,"E mail",u.email);
+		addLine(et,"E mail principal",u.email);
+		addLine(et,"E mail secondaire",u.email2);
 		addLine(et,"Téléphone 1",u.numTel1);
 		addLine(et,"Téléphone 2",u.numTel2);
 		addLine(et,"Adresse",u.libAdr1);

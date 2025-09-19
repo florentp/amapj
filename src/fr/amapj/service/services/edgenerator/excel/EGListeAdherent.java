@@ -72,10 +72,11 @@ public class EGListeAdherent extends AbstractExcelGenerator
 	@Override
 	public void fillExcelFile(RdbLink em,ExcelGeneratorTool et)
 	{
-		et.addSheet("Liste des adhérents", 10, 20);
+		et.addSheet("Liste des adhérents", 11, 20);
 		et.setColumnWidth(2, 40);
-		et.setColumnWidth(5, 40);
-		et.setColumnWidth(7, 40);
+		et.setColumnWidth(3, 40);
+		et.setColumnWidth(6, 40);
+		et.setColumnWidth(8, 40);
 		
 		
 		List<UtilisateurDTO> utilisateurs;
@@ -132,19 +133,20 @@ public class EGListeAdherent extends AbstractExcelGenerator
 		et.addRow();
 		et.setCell(0, "Nom", et.grasGaucheNonWrappeBordure);
 		et.setCell(1, "Prénom", et.grasGaucheNonWrappeBordure);
-		et.setCell(2, "E mail", et.grasGaucheNonWrappeBordure);
-		et.setCell(3, "Tel1", et.grasGaucheNonWrappeBordure);
-		et.setCell(4, "Tel2", et.grasGaucheNonWrappeBordure);
-		et.setCell(5, "Adr", et.grasGaucheNonWrappeBordure);
-		et.setCell(6, "Code Postal", et.grasGaucheNonWrappeBordure);
-		et.setCell(7, "Ville", et.grasGaucheNonWrappeBordure);
+		et.setCell(2, "E mail principal", et.grasGaucheNonWrappeBordure);
+		et.setCell(3, "E mail secondaire", et.grasGaucheNonWrappeBordure);
+		et.setCell(4, "Tel1", et.grasGaucheNonWrappeBordure);
+		et.setCell(5, "Tel2", et.grasGaucheNonWrappeBordure);
+		et.setCell(6, "Adr", et.grasGaucheNonWrappeBordure);
+		et.setCell(7, "Code Postal", et.grasGaucheNonWrappeBordure);
+		et.setCell(8, "Ville", et.grasGaucheNonWrappeBordure);
 		if (type!=Type.EXAMPLE)
 		{
-			et.setCell(8, "Rôle", et.grasGaucheNonWrappeBordure);
+			et.setCell(9, "Rôle", et.grasGaucheNonWrappeBordure);
 		}
 		if (type==Type.AVEC_INACTIF)
 		{
-			et.setCell(9, "Actif/Inactif", et.grasGaucheNonWrappeBordure);
+			et.setCell(10, "Actif/Inactif", et.grasGaucheNonWrappeBordure);
 		}
 		
 	}
@@ -172,27 +174,31 @@ public class EGListeAdherent extends AbstractExcelGenerator
 		{
 			et.setCell(2, u.getEmail(), et.nonGrasGaucheBordure);
 		}
+		if (peListeAdherentDTO.canAccessEmail)
+		{
+			et.setCell(3, u.getEmail2(), et.nonGrasGaucheBordure);
+		}
 		if (peListeAdherentDTO.canAccessTel1)
 		{
-			et.setCell(3, u.getNumTel1(), et.nonGrasGaucheBordure);
+			et.setCell(4, u.getNumTel1(), et.nonGrasGaucheBordure);
 		}
 		if (peListeAdherentDTO.canAccessTel2)
 		{
-			et.setCell(4, u.getNumTel2(), et.nonGrasGaucheBordure);
+			et.setCell(5, u.getNumTel2(), et.nonGrasGaucheBordure);
 		}
 		if (peListeAdherentDTO.canAccessAdress)
 		{
-			et.setCell(5, u.getLibAdr1(), et.nonGrasGaucheBordure);
-			et.setCell(6, u.getCodePostal(), et.nonGrasGaucheBordure);
-			et.setCell(7, u.getVille(), et.nonGrasGaucheBordure);
+			et.setCell(6, u.getLibAdr1(), et.nonGrasGaucheBordure);
+			et.setCell(7, u.getCodePostal(), et.nonGrasGaucheBordure);
+			et.setCell(8, u.getVille(), et.nonGrasGaucheBordure);
 		}
 		if (type!=Type.EXAMPLE)
 		{
-			et.setCell(8, u.getRoles(), et.nonGrasGaucheBordure);
+			et.setCell(9, u.getRoles(), et.nonGrasGaucheBordure);
 		}
 		if (type==Type.AVEC_INACTIF)
 		{
-			et.setCell(9, u.getEtatUtilisateur().name(), et.nonGrasGaucheBordure);
+			et.setCell(10, u.getEtatUtilisateur().name(), et.nonGrasGaucheBordure);
 		}
 	}
 	

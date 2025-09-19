@@ -91,11 +91,12 @@ public class EGBilanInscriptionPermanence extends AbstractExcelGenerator
 	{
 		SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	
 		
-		et.addSheet(nomFeuille, 6, 20);
+		et.addSheet(nomFeuille, 7, 20);
 		et.setColumnWidth(2, 40);
-		et.setColumnWidth(3, 10);
+		et.setColumnWidth(3, 40);
 		et.setColumnWidth(4, 10);
 		et.setColumnWidth(5, 10);
+		et.setColumnWidth(6, 10);
 		
 		// Ligne de titre
 		et.addRow("Période de permanence "+dto.nom,et.grasGaucheNonWrappe);
@@ -110,10 +111,11 @@ public class EGBilanInscriptionPermanence extends AbstractExcelGenerator
 		et.addRow();
 		et.setCell(0, "Nom", et.grasGaucheNonWrappeBordure);
 		et.setCell(1, "Prénom", et.grasGaucheNonWrappeBordure);
-		et.setCell(2, "E mail", et.grasGaucheNonWrappeBordure);
-		et.setCell(3, "Souhaité", et.grasCentreBordure);
-		et.setCell(4, "Réel", et.grasCentreBordure);
-		et.setCell(5, "Delta", et.grasCentreBordure);
+		et.setCell(2, "E mail principal", et.grasGaucheNonWrappeBordure);
+		et.setCell(3, "E mail secondaire", et.grasGaucheNonWrappeBordure);
+		et.setCell(4, "Souhaité", et.grasCentreBordure);
+		et.setCell(5, "Réel", et.grasCentreBordure);
+		et.setCell(6, "Delta", et.grasCentreBordure);
 	
 		for (UtilisateurInfo u : oks)
 		{
@@ -122,9 +124,10 @@ public class EGBilanInscriptionPermanence extends AbstractExcelGenerator
 			et.setCell(0, u.utilisateur.nom, et.grasGaucheNonWrappeBordure);
 			et.setCell(1, u.utilisateur.prenom, et.nonGrasGaucheBordure);
 			et.setCell(2, u.utilisateur.email, et.nonGrasGaucheBordure);
-			et.setCellQte(3, u.nbParticipationSouhaite,et.grasCentreBordure);
-			et.setCellQte(4, u.nbParticipationRelle,et.grasCentreBordure);
-			et.setCellQte(5, u.nbParticipationSouhaite-u.nbParticipationRelle,et.grasCentreBordure);
+			et.setCell(3, u.utilisateur.email2, et.nonGrasGaucheBordure);
+			et.setCellQte(4, u.nbParticipationSouhaite,et.grasCentreBordure);
+			et.setCellQte(5, u.nbParticipationRelle,et.grasCentreBordure);
+			et.setCellQte(6, u.nbParticipationSouhaite-u.nbParticipationRelle,et.grasCentreBordure);
 		}
 		
 		if (displayMail)
