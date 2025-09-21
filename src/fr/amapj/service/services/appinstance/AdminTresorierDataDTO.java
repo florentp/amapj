@@ -51,15 +51,18 @@ public class AdminTresorierDataDTO
 		public String nom;
 		
 		public String prenom;
-		
+
 		public String email;
 
-		public ContactDTO(String nom, String prenom, String email)
+		public String email2;
+
+		public ContactDTO(String nom, String prenom, String email, String email2)
 		{
 			super();
 			this.nom = nom;
 			this.prenom = prenom;
 			this.email = email;
+			this.email2 = email2;
 		}
 		
 	}

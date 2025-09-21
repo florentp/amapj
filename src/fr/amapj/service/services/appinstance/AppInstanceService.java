@@ -474,11 +474,11 @@ public class AppInstanceService
 		
 		TypedQuery<Utilisateur> q = em.createQuery("select distinct(u) from Utilisateur u  where u.id in (select a.utilisateur.id from RoleAdmin a) and u.etatUtilisateur = :etat order by u.nom,u.prenom",Utilisateur.class);
 		q.setParameter("etat", EtatUtilisateur.ACTIF);
-		stat.admins = q.getResultList().stream().map(e->new AdminTresorierDataDTO.ContactDTO(e.nom, e.prenom, e.email)).collect(Collectors.toList());
+		stat.admins = q.getResultList().stream().map(e->new AdminTresorierDataDTO.ContactDTO(e.nom, e.prenom, e.email, e.email2)).collect(Collectors.toList());
 		
 		q = em.createQuery("select distinct(u) from Utilisateur u  where u.id in (select a.utilisateur.id from RoleTresorier a) and u.etatUtilisateur = :etat order by u.nom,u.prenom",Utilisateur.class);
 		q.setParameter("etat", EtatUtilisateur.ACTIF);
-		stat.tresoriers = q.getResultList().stream().map(e->new AdminTresorierDataDTO.ContactDTO(e.nom, e.prenom, e.email)).collect(Collectors.toList());
+		stat.tresoriers = q.getResultList().stream().map(e->new AdminTresorierDataDTO.ContactDTO(e.nom, e.prenom, e.email, e.email2)).collect(Collectors.toList());
 				
 		data.instances.add(stat);
 		

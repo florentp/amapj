@@ -42,7 +42,7 @@ public class UtilisateurImporter extends AbstractImporter<UtilisateurDTO>
 	@Override
 	public int getNumCol()
 	{
-		return 8;
+		return 9;
 	}
 	
 	@Override
@@ -50,7 +50,7 @@ public class UtilisateurImporter extends AbstractImporter<UtilisateurDTO>
 	{
 		if (indexCol==0) return "Nom";
 		if (indexCol==1) return "Prénom";
-		if (indexCol==2) return "E mail";
+		if (indexCol==2) return "E mail principal";
 	
 		return null;
 	}
@@ -72,12 +72,17 @@ public class UtilisateurImporter extends AbstractImporter<UtilisateurDTO>
 
 		if (isEmpty(dto.email) )
 		{
-			return "L'adresse e mail n'est pas renseignée. Elle est obligatoire. Si la personne n'a pas d'email, merci de mettre son nom ou prénom suivi d'un #. Exemple : geraldine#";
+			return "L'adresse e mail principale n'est pas renseignée. Elle est obligatoire. Si la personne n'a pas d'email, merci de mettre son nom ou prénom suivi d'un #. Exemple : geraldine#";
 		}
-		
+
 		if (EmailValidator.isValidEmail(dto.email)==false)
 		{
-			return "L'adresse e mail n'est pas valide. Si la personne n'a pas d'email, merci de mettre son nom ou prénom suivi d'un #. Exemple : geraldine#";
+			return "L'adresse e mail principale n'est pas valide. Si la personne n'a pas d'email, merci de mettre son nom ou prénom suivi d'un #. Exemple : geraldine#";
+		}
+
+		if (EmailValidator.isValidEmail(dto.email2)==false)
+		{
+			return "L'adresse e mail secondaire n'est pas valide.";
 		}
 		
 		return null;
@@ -92,11 +97,12 @@ public class UtilisateurImporter extends AbstractImporter<UtilisateurDTO>
 		dto.nom = strs[0];
 		dto.prenom = strs[1];
 		dto.email = trimEmail(strs[2]);
-		dto.numTel1 = strs[3];
-		dto.numTel2 = strs[4];
-		dto.libAdr1 = strs[5];
-		dto.codePostal = strs[6];
-		dto.ville = strs[7];
+		dto.email2 = trimEmail(strs[3]);
+		dto.numTel1 = strs[4];
+		dto.numTel2 = strs[5];
+		dto.libAdr1 = strs[6];
+		dto.codePostal = strs[7];
+		dto.ville = strs[8];
 		
 		return dto;
 	}

@@ -101,21 +101,24 @@ public class CreationUtilisateurEditorPart extends WizardFormPopup
 		addTextField("Prenom", "prenom",notNull);
 
 		// Champ 3
-		addTextField("E mail", "email",email);
+		addTextField("E mail principal", "email",email);
 		
 		// Champ 4
-		addTextField("Téléphone 1", "numTel1");
+		addTextField("E mail secondaire", "email2",email);
 		
 		// Champ 5
-		addTextField("Téléphone 2", "numTel2");
+		addTextField("Téléphone 1", "numTel1");
 
 		// Champ 6
+		addTextField("Téléphone 2", "numTel2");
+
+		// Champ 7
 		addTextField("Adresse", "libAdr1");
 		
-		// Champ 7
+		// Champ 8
 		addTextField("Code postal", "codePostal");
 		
-		// Champ 8
+		// Champ 9
 		addTextField("Ville", "ville");
 
 	}

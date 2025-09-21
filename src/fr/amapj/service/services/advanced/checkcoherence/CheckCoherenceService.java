@@ -21,7 +21,9 @@
  package fr.amapj.service.services.advanced.checkcoherence;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.TypedQuery;
 
@@ -37,6 +39,7 @@ import fr.amapj.model.models.fichierbase.RoleAdmin;
 import fr.amapj.model.models.fichierbase.RoleTresorier;
 import fr.amapj.service.services.appinstance.AppInstanceDTO;
 import fr.amapj.service.services.gestioncontrat.datebarree.DateBarreCheckService;
+import fr.amapj.service.services.utilisateur.util.UtilisateurUtil;
 
 /**
  * Permet la gestion des pacths pour les migrations
@@ -118,13 +121,21 @@ public class CheckCoherenceService
 	private String getMailsAdmin(RdbLink em) 
 	{
 		TypedQuery<RoleAdmin> q = em.createQuery("select r from RoleAdmin r", RoleAdmin.class);
-		return q.getResultList().stream().map(e -> e.utilisateur.email).distinct().collect(Collectors.joining(","));
+		return q.getResultList().stream()
+		        .flatMap(e -> Stream.of(e.utilisateur.email, e.utilisateur.email2))
+		        .filter(email -> UtilisateurUtil.canSendMailTo(email))
+		        .distinct()
+		        .collect(Collectors.joining(","));
 	}
 
 	private String getMailsTresorier(RdbLink em) 
 	{
 		TypedQuery<RoleTresorier> q = em.createQuery("select r from RoleTresorier r", RoleTresorier.class);
-		return q.getResultList().stream().map(e -> e.utilisateur.email).distinct().collect(Collectors.joining(","));
+		return q.getResultList().stream()
+		        .flatMap(e -> Stream.of(e.utilisateur.email, e.utilisateur.email2))
+		        .filter(email -> UtilisateurUtil.canSendMailTo(email))
+		        .distinct()
+		        .collect(Collectors.joining(","));
 	}
 
 	// PARTIE TECHNIQUE

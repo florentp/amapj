@@ -59,9 +59,10 @@ public class EGBilanAdhesion extends AbstractExcelGenerator
 	{
 		BilanAdhesionDTO bilan = new GestionCotisationService().loadBilanAdhesion(periodeCotisationId);
 		
-		// Calcul du nombre de colonnes :  Nom + prénom + montant du chéque + état du paiement + type du paiement + date de réception + e mail 
-		et.addSheet("Adhésion", 7, 20);
+		// Calcul du nombre de colonnes :  Nom + prénom + montant du chéque + état du paiement + type du paiement + date de réception + e mail principal + e mail secondaire
+		et.addSheet("Adhésion", 8, 20);
 		et.setColumnWidth(6, 40);
+		et.setColumnWidth(7, 40);
 				
 		et.addRow("Bilan des adhésions pour la période de "+bilan.periodeCotisationDTO.nom,et.grasGaucheNonWrappe);
 		et.addRow("",et.grasGaucheNonWrappe);
@@ -81,7 +82,8 @@ public class EGBilanAdhesion extends AbstractExcelGenerator
 		et.setCell(3,"Etat du paiement",et.grasCentreBordure);
 		et.setCell(4,"Type du paiement",et.grasCentreBordure);
 		et.setCell(5,"Date de réception",et.grasCentreBordure);
-		et.setCell(6,"E mail",et.grasCentreBordure);
+		et.setCell(6,"E mail principal",et.grasCentreBordure);
+		et.setCell(7,"E mail secondaire",et.grasCentreBordure);
 		
 		
 		// Une ligne pour chaque adhésion
@@ -110,6 +112,7 @@ public class EGBilanAdhesion extends AbstractExcelGenerator
 		et.setCell(4,pu.typePaiementAdhesion.toString(),et.nonGrasCentreBordure);
 		et.setCell(5,getDate(pu.dateReceptionCheque),et.nonGrasCentreBordure);
 		et.setCell(6,UtilisateurUtil.libMail(u),et.nonGrasGaucheBordure);
+		et.setCell(7,UtilisateurUtil.libMail2(u),et.nonGrasGaucheBordure);
 		
 	}
 
@@ -136,6 +139,7 @@ public class EGBilanAdhesion extends AbstractExcelGenerator
 		et.setCell(4,"",et.nonGrasGaucheBordure);
 		et.setCell(5,"",et.nonGrasGaucheBordure);
 		et.setCell(6,"",et.nonGrasGaucheBordure);
+		et.setCell(7,"",et.nonGrasGaucheBordure);
 	}
 
 	

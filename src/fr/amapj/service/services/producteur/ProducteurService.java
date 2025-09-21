@@ -223,9 +223,13 @@ public class ProducteurService
 		for (ProducteurUtilisateur pu : pus) 
 		{
 			Utilisateur u = pu.utilisateur;
-			if (UtilisateurUtil.canSendMailTo(u))
+			if (UtilisateurUtil.canSendMailTo(u.email))
 			{
 				res = res+u.email+";";
+			}
+			if (UtilisateurUtil.canSendMailTo(u.email2))
+			{
+				res = res+u.email2+";";
 			}
 		}
 		return res;

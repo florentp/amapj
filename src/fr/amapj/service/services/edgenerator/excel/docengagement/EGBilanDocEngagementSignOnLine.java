@@ -57,9 +57,10 @@ public class EGBilanDocEngagementSignOnLine extends AbstractExcelGenerator
 	@Override
 	public void fillExcelFile(RdbLink em,ExcelGeneratorTool et)
 	{
-		// Calcul du nombre de colonnes :  Nom + prénom + etat signature amapien + date signature amapien + etat signature producteur  + date signature producteur + e mail 
-		et.addSheet("Bilan signature en ligne", 7, 25);
+		// Calcul du nombre de colonnes :  Nom + prénom + etat signature amapien + date signature amapien + etat signature producteur  + date signature producteur + e mail principal + e mail secondaire
+		et.addSheet("Bilan signature en ligne", 8, 25);
 		et.setColumnWidth(6, 40);
+		et.setColumnWidth(7, 40);
 	
 		ModeleContrat mc = em.find(ModeleContrat.class, idModeleContrat);
 		List<DocEngagementSignOnLineDTO> dtos = new DocEngagementSignOnLineService().getBilanSignature(idModeleContrat);
@@ -83,7 +84,8 @@ public class EGBilanDocEngagementSignOnLine extends AbstractExcelGenerator
 		et.setCell(3,"Date signature amapien",et.grasCentreBordure);
 		et.setCell(4,"Signature producteur",et.grasCentreBordure);
 		et.setCell(5,"Date signature producteur",et.grasCentreBordure);
-		et.setCell(6,"E mail",et.grasCentreBordure);
+		et.setCell(6,"E mail principal",et.grasCentreBordure);
+		et.setCell(7,"E mail secondaire",et.grasCentreBordure);
 		
 		
 		// Une ligne pour chaque contrat
@@ -113,9 +115,16 @@ public class EGBilanDocEngagementSignOnLine extends AbstractExcelGenerator
 		for (DocEngagementSignOnLineDTO dto : dtos) 
 		{
 			Utilisateur u = em.find(Utilisateur.class, dto.idUtilisateur);
-			if (dto.signedByAmapien==null && UtilisateurUtil.canSendMailTo(u))
+			if (dto.signedByAmapien==null)
 			{
-				res = res+u.email+";";
+				if (UtilisateurUtil.canSendMailTo(u.email))
+				{
+					res = res+u.email+";";
+				}
+				if (UtilisateurUtil.canSendMailTo(u.email2))
+				{
+					res = res+u.email2+";";
+				}
 			}
 		}
 		return res;
@@ -148,6 +157,7 @@ public class EGBilanDocEngagementSignOnLine extends AbstractExcelGenerator
 		et.setCell(5,f(dto.signedByProducteur),et.switchGray(et.nonGrasCentreBordure,applyGray));
 		
 		et.setCell(6,UtilisateurUtil.libMail(u),et.switchGray(et.nonGrasGaucheBordure,applyGray));
+		et.setCell(7,UtilisateurUtil.libMail2(u),et.switchGray(et.nonGrasGaucheBordure,applyGray));
 		
 	}
 

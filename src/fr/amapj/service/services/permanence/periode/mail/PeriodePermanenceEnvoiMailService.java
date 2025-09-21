@@ -40,6 +40,7 @@ import fr.amapj.service.services.parametres.ParametresDTO;
 import fr.amapj.service.services.parametres.ParametresService;
 import fr.amapj.service.services.permanence.mespermanences.MesPermanencesService;
 import fr.amapj.service.services.permanence.periode.PeriodePermanenceDateDTO;
+import fr.amapj.service.services.utilisateur.util.UtilisateurUtil;
 
 /**
  * Permet d'envoyer des mails aux participants d'une permanence 
@@ -99,7 +100,6 @@ public class PeriodePermanenceEnvoiMailService
 		ParametresDTO param = new ParametresService().getParametres();
 		
 		//
-		String email=utilisateur.email;
 		
 		String subject = param.nomAmap+" - Planning des permanences";
 		String htmlContent = texte;
@@ -119,7 +119,7 @@ public class PeriodePermanenceEnvoiMailService
 		
 		// Construction du message
 		MailerMessage message  = new MailerMessage();
-		message.setEmail(email);
+		message.setEmail(UtilisateurUtil.libMails(utilisateur));
 		message.setTitle(subject);
 		message.setContent(htmlContent);
 		message.addAttachement(attachement);

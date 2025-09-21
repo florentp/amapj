@@ -65,6 +65,7 @@ public class MonCompteService
 		
 		Utilisateur u = em.find(Utilisateur.class, dto.id);
 
+		u.email2 = dto.email2;
 		u.numTel1 = dto.numTel1;
 		u.numTel2 = dto.numTel2;
 		u.libAdr1 = dto.libAdr1;

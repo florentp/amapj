@@ -24,6 +24,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -467,9 +470,13 @@ public class GestionContratSigneService
 
 		ModeleContrat mc = em.find(ModeleContrat.class, idModeleContrat);
 
-		Query q = em.createQuery("select c.utilisateur.email from Contrat c WHERE c.modeleContrat=:mc ORDER BY c.utilisateur.nom, c.utilisateur.prenom");
+		TypedQuery<Utilisateur> q = em.createQuery("select c.utilisateur from Contrat c WHERE c.modeleContrat=:mc ORDER BY c.utilisateur.nom, c.utilisateur.prenom", Utilisateur.class);
 		q.setParameter("mc", mc);
-		List<String> mails = q.getResultList();
+		List<String> mails = q.getResultList().stream()
+			    .flatMap(u -> Stream.of(u.email, u.email2))
+			    .filter(email -> UtilisateurUtil.canSendMailTo(email))
+			    .distinct()
+			    .collect(Collectors.toList());
 		return mails;
 	}
 

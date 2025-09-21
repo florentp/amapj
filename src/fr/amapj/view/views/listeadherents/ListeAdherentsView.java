@@ -84,7 +84,7 @@ public class ListeAdherentsView extends StandardListPart<UtilisateurDTO>
 		
 		if (p.canAccessEmail)
 		{	
-			addColumn("email","E mail");
+			addColumn("email","E mail principal");
 		}
 		if (p.canAccessTel1)
 		{	

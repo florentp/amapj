@@ -144,7 +144,7 @@ public class PeriodiqueNotificationService
 		
 		message.setTitle(titre);
 		message.setContent(content);
-		message.setEmail(utilisateur.email);
+		message.setEmail(UtilisateurUtil.libMails(utilisateur));
 		sendMessageAndMemorize(message,d,utilisateur.getId());
 		
 	}
